@@ -2,8 +2,8 @@ package ch.makery.address.view
 import ch.makery.address.model.Person
 import ch.makery.address.MainApp
 import javafx.fxml.FXML
-import javafx.scene.control.{Label, TableColumn, TableView}
-import scalafx.Includes._
+import javafx.scene.control.{Label, TableColumn, TableView, TextField}
+import scalafx.Includes.*
 @FXML
 class PersonOverviewController():
   @FXML
@@ -24,9 +24,14 @@ class PersonOverviewController():
   private var cityLabel: Label = null
   @FXML
   private var birthdayLabel: Label = null
+  @FXML
+  private var mytext: TextField = null
   // initialize Table View display contents model
+
   def initialize() =
     personTable.items = MainApp.personData
     // initialize columns's cell values
     firstNameColumn.cellValueFactory = {_.value.firstName}
     lastNameColumn.cellValueFactory  = {_.value.lastName}
+    firstNameLabel.text <== mytext.text
+
