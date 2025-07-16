@@ -67,7 +67,7 @@
                       <Button mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                     </buttons>
                   </ButtonBar>
-                  <TextField fx:id="mytext" layoutX="14.0" layoutY="255.0" prefHeight="38.0" prefWidth="70.0" />
+                  <TextField fx:id="mytext" disable="true" layoutX="14.0" layoutY="255.0" prefHeight="38.0" prefWidth="70.0" visible="false" />
                </children>
             </AnchorPane>
         </items>

@@ -1,7 +1,7 @@
 package ch.makery.address
 
 import ch.makery.address.model.Person
-import ch.makery.address.view.PersonEditDialogController
+import ch.makery.address.view.{PersonEditDialogController, PersonOverviewController}
 import javafx.fxml.FXMLLoader
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
@@ -19,6 +19,7 @@ object MainApp extends JFXApp3:
   var roots: Option[scalafx.scene.layout.BorderPane] = None
   //stylesheet
   var cssResource = getClass.getResource("view/DarkTheme.css")
+  var personOverviewController : Option[PersonOverviewController] = None
   /**
    * The data as an observable list of Persons.
    */
@@ -57,10 +58,17 @@ object MainApp extends JFXApp3:
         root = roots.get
 
     // call to display PersonOverview when app start
-    showPersonOverview()
+    showWelcome()
   // actions for display person overview window
   def showPersonOverview(): Unit =
     val resource = getClass.getResource("view/PersonOverview.fxml")
+    val loader = new FXMLLoader(resource)
+    loader.load()
+    val roots = loader.getRoot[jfxs.layout.AnchorPane]
+    this.roots.get.center = roots
+    personOverviewController = Option(loader.getController[PersonOverviewController])
+  def showWelcome() : Unit =
+    val resource = getClass.getResource("view/Welcome.fxml")
     val loader = new FXMLLoader(resource)
     loader.load()
     val roots = loader.getRoot[jfxs.layout.AnchorPane]
@@ -94,6 +102,7 @@ object MainApp extends JFXApp3:
 
     val dialog = new Stage():
       title = "Edit Person"
+      icons += new Image(getClass.getResource("/images/cher.png").toExternalForm)
       initModality(Modality.ApplicationModal)
       initOwner(stage)
       scene = new Scene:
