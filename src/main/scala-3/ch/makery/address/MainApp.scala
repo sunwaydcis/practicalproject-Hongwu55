@@ -1,6 +1,7 @@
 package ch.makery.address
 
 import ch.makery.address.model.Person
+import ch.makery.address.util.Database
 import ch.makery.address.view.{PersonEditDialogController, PersonOverviewController}
 import javafx.fxml.FXMLLoader
 import scalafx.application.JFXApp3
@@ -14,7 +15,7 @@ import scalafx.scene.image.Image
 import scalafx.stage.{Modality, Stage}
 
 object MainApp extends JFXApp3:
-
+  Database.setupDB()
   //Window Root Pane
   var roots: Option[scalafx.scene.layout.BorderPane] = None
   //stylesheet
@@ -28,15 +29,7 @@ object MainApp extends JFXApp3:
   /**
    * Constructor
    */
-  personData += new Person("Hans", "Muster")
-  personData += new Person("Ruth", "Mueller")
-  personData += new Person("Heinz", "Kurz")
-  personData += new Person("Cornelia", "Meier")
-  personData += new Person("Werner", "Meyer")
-  personData += new Person("Lydia", "Kunz")
-  personData += new Person("Anna", "Best")
-  personData += new Person("Stefan", "Meier")
-  personData += new Person("Martin", "Mueller")
+  personData ++= Person.getAllPersons
 
 
   override def start(): Unit =
@@ -67,6 +60,7 @@ object MainApp extends JFXApp3:
     val roots = loader.getRoot[jfxs.layout.AnchorPane]
     this.roots.get.center = roots
     personOverviewController = Option(loader.getController[PersonOverviewController])
+
   def showWelcome() : Unit =
     val resource = getClass.getResource("view/Welcome.fxml")
     val loader = new FXMLLoader(resource)
@@ -92,6 +86,10 @@ object MainApp extends JFXApp3:
     println(string1.value)
     println(string2.value)
     println(string3.value)
+
+//  given Int = 9
+//  def add(a: Int)(implicit b : Int) = a+b
+//  println(add(4))
 
   def showPersonEditDialog(person: Person): Boolean =
     val resource = getClass.getResource("view/PersonEditDialog.fxml")
